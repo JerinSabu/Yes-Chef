@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.UI; 
+using UnityEngine.UI;
 
 public class Table : MonoBehaviour, IInteractable
 {
@@ -11,8 +11,13 @@ public class Table : MonoBehaviour, IInteractable
     private float currentChopTimer = 0f;
     private Ingredient currentIngredient;
 
-    [Header("UI")]
+    [Header("UI & Visuals")]
     public Slider progressBar;
+    public Transform itemPoint; 
+    public GameObject rawVegetablePrefab;
+    public GameObject choppedVegetablePrefab;
+
+    private GameObject currentVisual;
 
     private void Start()
     {
@@ -25,7 +30,6 @@ public class Table : MonoBehaviour, IInteractable
         {
             currentChopTimer += Time.deltaTime;
 
-            
             if (progressBar != null)
             {
                 progressBar.value = currentChopTimer / chopTime;
@@ -57,6 +61,12 @@ public class Table : MonoBehaviour, IInteractable
                     progressBar.gameObject.SetActive(true);
                     progressBar.value = 0f;
                 }
+
+                
+                if (rawVegetablePrefab != null && itemPoint != null)
+                {
+                    currentVisual = Instantiate(rawVegetablePrefab, itemPoint.position, itemPoint.rotation, itemPoint);
+                }
             }
         }
         else if (currentState == StationState.Finished)
@@ -68,6 +78,9 @@ public class Table : MonoBehaviour, IInteractable
                 currentState = StationState.Empty;
 
                 if (progressBar != null) progressBar.gameObject.SetActive(false);
+
+                
+                if (currentVisual != null) Destroy(currentVisual);
             }
         }
     }
@@ -76,5 +89,13 @@ public class Table : MonoBehaviour, IInteractable
     {
         currentIngredient.State = IngredientState.Chopped;
         currentState = StationState.Finished;
+
+        
+        if (currentVisual != null) Destroy(currentVisual);
+
+        if (choppedVegetablePrefab != null && itemPoint != null)
+        {
+            currentVisual = Instantiate(choppedVegetablePrefab, itemPoint.position, itemPoint.rotation, itemPoint);
+        }
     }
 }

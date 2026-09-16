@@ -4,6 +4,16 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController), typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("3D Visuals")]
+    public Transform handHoldPoint;
+    public GameObject rawVegetablePrefab;
+    public GameObject choppedVegetablePrefab;
+    public GameObject rawMeatPrefab;
+    public GameObject cookedMeatPrefab;
+    public GameObject cheesePrefab;
+
+    private GameObject currentVisualItem;
+
     [Header("Movement")]
     public float moveSpeed = 5f;
     private CharacterController controller;
@@ -94,5 +104,40 @@ public class PlayerController : MonoBehaviour
     {
         HeldIngredient = ingredient;
         animator.SetBool(isHoldingHash, HeldIngredient != null);
+        UpdateVisuals();
+    }
+
+    private void UpdateVisuals()
+    {
+        
+        if (currentVisualItem != null)
+        {
+            Destroy(currentVisualItem);
+        }
+
+        
+        if (HeldIngredient == null) return;
+
+        
+        GameObject prefabToSpawn = null;
+
+        if (HeldIngredient.Type == IngredientType.Vegetable)
+        {
+            prefabToSpawn = HeldIngredient.State == IngredientState.Raw ? rawVegetablePrefab : choppedVegetablePrefab;
+        }
+        else if (HeldIngredient.Type == IngredientType.Meat)
+        {
+            prefabToSpawn = HeldIngredient.State == IngredientState.Raw ? rawMeatPrefab : cookedMeatPrefab;
+        }
+        else if (HeldIngredient.Type == IngredientType.Cheese)
+        {
+            prefabToSpawn = cheesePrefab;
+        }
+
+        
+        if (prefabToSpawn != null && handHoldPoint != null)
+        {
+            currentVisualItem = Instantiate(prefabToSpawn, handHoldPoint.position, handHoldPoint.rotation, handHoldPoint);
+        }
     }
 }

@@ -6,7 +6,7 @@ public class CustomerWindow : MonoBehaviour, IInteractable
 {
     public Order CurrentOrder { get; private set; }
     [Header("UI References")]
-    public TextMeshProUGUI timerText; // We will only use this for time now
+    public TextMeshProUGUI timerText; 
     public Transform iconContainer;
     public GameObject iconPrefab;
     public GameObject scorePopupPrefab;
@@ -115,7 +115,7 @@ public class CustomerWindow : MonoBehaviour, IInteractable
     {
         if (timerText == null) return;
 
-        // Clear out the old icons first
+        
         if (iconContainer != null)
         {
             foreach (Transform child in iconContainer)
@@ -133,7 +133,7 @@ public class CustomerWindow : MonoBehaviour, IInteractable
             float activeTime = Time.time - CurrentOrder.SpawnTime;
             timerText.text = $"Time: {activeTime:F1}s";
 
-            // Spawn new icons for what is currently needed
+            
             if (iconContainer != null && iconPrefab != null)
             {
                 foreach (var item in CurrentOrder.PendingIngredients)
