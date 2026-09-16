@@ -4,7 +4,7 @@ public class Trash : MonoBehaviour, IInteractable
 {
     public void Interact(PlayerController player)
     {
-        // Only throw away if the player is actually holding something
+        
         if (player.HeldIngredient != null)
         {
             Debug.Log($"Threw away {player.HeldIngredient.State} {player.HeldIngredient.Type}");

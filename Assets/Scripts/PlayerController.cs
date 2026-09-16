@@ -26,10 +26,10 @@ public class PlayerController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
 
-        // Initialize the new input system
+        
         inputActions = new PlayerControls();
 
-        // Subscribe to the interact action
+        
         inputActions.Player.Interact.performed += ctx => TryInteract();
     }
 
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
 
     private void HandleMovement()
     {
-        // Read the Vector2 value from the Move action
+        
         moveInput = inputActions.Player.Move.ReadValue<Vector2>();
         Vector3 move = new Vector3(moveInput.x, 0, moveInput.y).normalized;
 

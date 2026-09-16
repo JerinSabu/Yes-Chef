@@ -4,7 +4,7 @@ public class Refrigerator : MonoBehaviour, IInteractable
 {
     public void Interact(PlayerController player)
     {
-        // If the player's hands are empty, start the cycle with a Vegetable
+        
         if (player.HeldIngredient == null)
         {
             Ingredient newIngredient = new Ingredient(IngredientType.Vegetable, IngredientState.Raw);
@@ -13,7 +13,7 @@ public class Refrigerator : MonoBehaviour, IInteractable
         }
         else
         {
-            // If they are already holding an ingredient, cycle to the next one
+            
             IngredientType currentType = player.HeldIngredient.Type;
             IngredientType nextType;
 
@@ -31,7 +31,7 @@ public class Refrigerator : MonoBehaviour, IInteractable
                     break;
             }
 
-            // Replace the held item with the new raw ingredient
+            
             Ingredient cycledIngredient = new Ingredient(nextType, IngredientState.Raw);
             player.SetHeldIngredient(cycledIngredient);
             Debug.Log($"Swapped for a raw {nextType}");

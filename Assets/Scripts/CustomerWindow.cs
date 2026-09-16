@@ -20,7 +20,7 @@ public class CustomerWindow : MonoBehaviour, IInteractable
     private bool isWaitingForNewOrder = false;
     private const float RESPAWN_DELAY = 5f;
 
-    // We removed Start() completely. The GameManager will call this instead.
+    
     public void ResetWindow()
     {
         CurrentOrder = new Order(Time.time);
@@ -31,7 +31,7 @@ public class CustomerWindow : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        // Don't tick timers if the game is paused or hasn't started
+        
         if (GameManager.Instance == null || !GameManager.Instance.isGameActive) return;
 
         if (isWaitingForNewOrder)
@@ -59,7 +59,7 @@ public class CustomerWindow : MonoBehaviour, IInteractable
 
     public void Interact(PlayerController player)
     {
-        // Don't allow deliveries if the game isn't active
+        
         if (GameManager.Instance == null || !GameManager.Instance.isGameActive) return;
         if (isWaitingForNewOrder || CurrentOrder == null) return;
 
@@ -84,8 +84,6 @@ public class CustomerWindow : MonoBehaviour, IInteractable
             }
         }
     }
-
-    // ... keep IsIngredientPrepared, CompleteOrder, and UpdateUI exactly as they were!
 
     private bool IsIngredientPrepared(Ingredient ingredient)
     {
